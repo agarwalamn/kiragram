@@ -46,7 +46,7 @@ class User extends Authenticatable
                 'title'=>$user->name,
             ]);
 
-            Mail::to($user->email)->send(new newUserWelcomeMail());
+            // Mail::to($user->email)->send(new newUserWelcomeMail());
         });
     }
     public function profile(){

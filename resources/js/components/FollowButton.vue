@@ -14,7 +14,6 @@
             return{
                 status: this.follows,   
             }
-            
         },
 
         methods:{

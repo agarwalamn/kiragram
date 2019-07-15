@@ -13,7 +13,7 @@
 
 
 Auth::routes();
-
+Route::get('/search/{user}','ProfilesController@search');
 Route::get('/p/create','PostsController@create');
 Route::get('/p/{post}','PostsController@show');
 Route::post('/p','PostsController@store');

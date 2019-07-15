@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Cache;
 use Intervention\Image\Facades\Image;
+use App\Product;
 class ProfilesController extends Controller
 {
     //
@@ -57,6 +58,11 @@ class ProfilesController extends Controller
        auth()->user()->profile->update(array_merge($data,$imageArray));
 
         return redirect("/profile/{$user->id}");
+    }
+    public function search($user)        
+    {
+
+        return User::select("id","username")->where('username','like',"%".$user."%")->get();
     }
 
 
