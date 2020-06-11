@@ -15,21 +15,9 @@ class ProfilesController extends Controller
         $follows =(auth()->user()) ? auth()->user()->following->contains($user): false;
         $user=User::findOrFail($user);
 
-        $postCount = Cache::remember('count.posts.'.$user->id ,
-        now()->addSeconds(30),
-        function() use($user){
-            return $user->posts->count();
-        });
-        $followersCount = Cache::remember('count.posts.'.$user->id ,
-        now()->addSeconds(30),
-        function() use($user){
-            return $user->profile->followers->count();
-        });
-        $followingCount = Cache::remember('count.posts.'.$user->id ,
-        now()->addSeconds(30),
-        function() use($user){
-            return $user->following->count();
-        });
+        $postCount = $user->posts->count();
+        $followersCount =$user->profile->followers->count();
+        $followingCount = $user->following->count();
         
         return view('profiles.index',compact('user','follows','postCount','followersCount','followingCount'));
     }
@@ -44,9 +32,16 @@ class ProfilesController extends Controller
        $data = \request()->validate([
            'title'=> 'required',
            'description'=>'required',
-           'url'=>'url',
            'image'=>'image'
        ]);
+       if(request('url')!=''){
+          $data = \request()->validate([
+           'title'=> 'required',
+           'description'=>'required',
+           'url'=>'url',
+           'image'=>'image'
+        ]);
+       }
        $imagePath =$user->profile->image;
        $imageArray = ['image'=>$imagePath];
        if(\request('image')){
